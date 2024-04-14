@@ -146,6 +146,7 @@ void search_std_subj(student_subj** rptr, subjects **sptr){
 
 
 void search_subj_std(student_subj** rptr, students** sptr){
+    // search students doing a subject
 
     float search_period;
     string search_subj_id;
@@ -185,6 +186,81 @@ void search_subj_std(student_subj** rptr, students** sptr){
             cout << "There's no student registered for this subject";
         }
     }
+}
+
+
+void register_new_std_class(student_subj** rptr, subjects** sptr, students** stdptr){
+    // register student's subject by period
+
+    student_subj new_regist;
+    student_subj* it_ptr = *rptr;
+    student_subj* last_el_ptr;
+    subjects* third_it_ptr = *sptr;
+    students* sec_it_ptr = *stdptr;
+    string subject;
+    int is_found = 0;
+    int is_std_regist = 0;
+    int is_subj_regist = 0;
+
+    cout << "Please insert the period you wan't to register";
+    cin >> new_regist.period;
+    cout << "Please insert the student's ID";
+    cin >>  new_regist.student_id;
+    cout << "Please insert the subjects you wan't register and when finished type done";
+
+    while (cin >> subject && subject != "done") {
+        new_regist.subjs_id.push_back(subject);
+    }
+    // first check if the subject ids are registered in the subjects LE
+    // check it for the student id too
+
+    while(sec_it_ptr != NULL){
+        if ((*sec_it_ptr).student_id == new_regist.student_id){
+            is_std_regist = 1;
+        }
+        sec_it_ptr = (*sec_it_ptr).next;
+    }
+    if (is_std_regist != 1){
+        cout << "Student not found on the database. Please register it";
+        return;
+    }
+
+    for (unsigned int i=0; i < new_regist.subjs_id.size(); i++){
+        is_subj_regist = 0;
+        while(third_it_ptr != NULL){
+            if ((*third_it_ptr).subj_id == new_regist.subjs_id[i]){
+                is_subj_regist = 1;
+            }
+            third_it_ptr = (*third_it_ptr).next;
+        }
+        if (is_subj_regist == 0){
+            cout << "The following subject ID wasn't found: " << new_regist.subjs_id[i]; 
+        }
+    }
+
+    if (is_subj_regist == 0){
+        return;
+    }
+
+    // search for the period/std ID pair and append the current subject list if found
+    // else just add the struct in the end of the database
+
+    while(it_ptr != NULL){
+        if (((*it_ptr).period == new_regist.period) && ((*it_ptr).student_id) == new_regist.student_id){
+            (*it_ptr).subjs_id.insert((*it_ptr).subjs_id.end(), new_regist.subjs_id.begin(), new_regist.subjs_id.end());
+            is_found = 1;
+        }
+        last_el_ptr = it_ptr;
+        it_ptr = (*it_ptr).next;
+    }
+    if (is_found == 0){
+        (*last_el_ptr).next = &new_regist;
+    }
+}
+
+
+void remove_std_class(){
+    
 }
 
 
