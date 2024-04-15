@@ -234,6 +234,7 @@ void subjects_csv(subjects *lista) {
     }
 }
 
+
 void periods_csv(periods *listap) {
     ofstream arquivo("periods.csv"); 
     
@@ -512,4 +513,27 @@ void remove_std_class(student_subj** rptr){
             it_ptr = (*it_ptr).next;
         }
     }
+}
+
+
+int main(){
+    /*
+    inserir_subjects ("2411","Matematica discreta", "Veloso", 100, &lista);
+    inserir_subjects ("2412","Sitemas Digitais", "Rotava", 100, &lista);
+    inserir_subjects ("2321","Calculo 3", "Lima Vaz", 100, &lista);
+    print_subjects(lista);
+    inserir_periods (24.1,{"2411", "2412"} ,&listap, lista);
+    inserir_periods (23.2,{"2321"} ,&listap, lista);
+    print_periods(listap);
+    periods_csv(listap);
+    subjects_csv(lista);
+    */
+   int is_running = 1;
+   int action;
+   while(is_running == 1){
+        cout << "Type the number in front of each option to choose an action:\n1)Register new student\n2)Register new subject\n3)Register new period\n4)Register student's subject\n5)Remove student\n6)Remove student's subjects\n7)Remove period\n8)Remove subject\n";
+        cin >> action;
+        cout << "Type 1 to keep using the aplications. Type 0 otherwise";
+        cin >> is_running;
+   }
 }
