@@ -43,7 +43,7 @@ void register_student(student_regist** rptr){
      
     student_regist *new_regist;
     students *it_ptr;
-    it_ptr = (**rptr).next;
+    it_ptr = *rptr;
 
     new_regist = new student_regist;
     cout << "Please insert students credentials \nID: ";
@@ -52,6 +52,15 @@ void register_student(student_regist** rptr){
     cin >> (*new_regist).name;
     cout << "\nCPF: ";
     cin >> (*new_regist).cpf;
+
+    while(it_ptr != NULL){
+        if ((*it_ptr).student_id == (*new_regist).student_id){
+            cout << "Student already registered with name " << (*it_ptr).name << " and CPF " << (*it_ptr).cpf; 
+            return;
+        }
+    }
+
+    it_ptr = (**rptr).next;
 
     if(*rptr == NULL){
         // Empty list
@@ -76,7 +85,7 @@ void remove_student(student_regist** rptr){
     it_ptr = (**rptr).next;
     int removed = 0;
 
-    cout << "Please insert the ID you want to remove \nName: ";
+    cout << "Please insert the ID you want to remove: ";
     cin >> removed_id;
 
     if((**rptr).student_id == removed_id){
@@ -112,9 +121,9 @@ void search_std_subj(student_subj** rptr, subjects **sptr){
     subjects *sec_it_ptr = *sptr;
     int is_found = 0;
 
-    cout << "Please insert the ID of the student";
+    cout << "Please insert the ID of the student: ";
     cin >>  search_std_id;
-    cout << "Please insert the period you wan't to search for";
+    cout << "Please insert the period you wan't to search for: ";
     cin >> search_period;
 
     if (rptr == NULL){
@@ -155,9 +164,9 @@ void search_subj_std(student_subj** rptr, students** sptr){
     students* sec_it_ptr = *sptr;
     int is_found = 0;
 
-    cout << "Please insert the ID of the subject";
+    cout << "Please insert the ID of the subject: ";
     cin >>  search_subj_id;
-    cout << "Please insert the period you wan't to search for";
+    cout << "Please insert the period you wan't to search for: ";
     cin >> search_period;
 
     if (rptr == NULL){
@@ -202,11 +211,11 @@ void register_new_std_class(student_subj** rptr, subjects** sptr, students** std
     int is_std_regist = 0;
     int is_subj_regist = 0;
 
-    cout << "Please insert the period you wan't to register";
+    cout << "Please insert the period you wan't to register: ";
     cin >> new_regist.period;
-    cout << "Please insert the student's ID";
+    cout << "Please insert the student's ID: ";
     cin >>  new_regist.student_id;
-    cout << "Please insert the subjects you wan't register and when finished type done";
+    cout << "Please insert the subjects you wan't register and when finished type done: ";
 
     while (cin >> subject && subject != "done") {
         new_regist.subjs_id.push_back(subject);
@@ -259,8 +268,31 @@ void register_new_std_class(student_subj** rptr, subjects** sptr, students** std
 }
 
 
-void remove_std_class(){
-    
+void remove_std_class(student_subj** rptr){
+    string removed_std_id;
+    float removed_std_period;
+    student_subj* it_ptr = *rptr;
+    student_subj* last_el = NULL;
+
+    cout << "Please insert the ID you want to remove: ";
+    cin >> removed_std_id;
+    cout << "Please insert the period associated: ";
+    cin >> removed_std_period;
+
+    if(((**rptr).period == removed_std_period) && ((**rptr).student_id == removed_std_id)){
+        *rptr = (**rptr).next;
+    }
+    else{
+        while(it_ptr != NULL){
+            if (((*it_ptr).student_id == removed_std_id) && ((*it_ptr).period == removed_std_period)){
+                (*last_el).next = (*it_ptr).next;
+            }
+            else{
+                last_el = it_ptr;
+            }
+            it_ptr = (*it_ptr).next;
+        }
+    }
 }
 
 
