@@ -3,11 +3,7 @@
 #include <vector>
 #include <algorithm>
 
-#include <fstream>
-#include <sstream>
-
 using namespace std;
-
 
 typedef struct students{
     string student_id;
@@ -296,8 +292,4 @@ void remove_std_class(student_subj** rptr){
             it_ptr = (*it_ptr).next;
         }
     }
-}
-
-
-int main(){
 }
