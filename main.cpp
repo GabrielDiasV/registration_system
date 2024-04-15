@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
+
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -25,7 +28,7 @@ typedef struct subjects{
 
 typedef struct periods{
     float period;
-    vector<int> subjs_id;
+    vector<string> subjs_id;
     struct periods *next;
 } period_schedule;
 
@@ -296,12 +299,5 @@ void remove_std_class(student_subj** rptr){
 }
 
 
-void selection_menu(){
-
-}
-
-
 int main(){
-
 }
-
